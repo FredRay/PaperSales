@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<head>
+	<title>Socialist Party App</title>
+	<meta name="viewport" content="width-device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="libraries/mobile/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<script src="libraries/jquery-1.12.4.min.js"></script>
+	<script src="libraries/mobile/jquery.mobile-1.4.5.min.js"></script>
+	<script src="scripts/main.js"></script>
+</head>
+<body>
+	<div data-role="page" id="paperList">
+		<div data-role="header" data-position="fixed" data-theme="b">
+			<h1>Paper Sales</h1>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" id="papersArray">
+			</ul>
+		</div>
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#paperList" data-icon="bars">Papers</a></li>
+					<li><a href="#otherSales" data-icon="grid">Others</a></li>
+					<li><a href="#settings" data-icon="gear">Settings</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" data-dialog="true" id="newPaper">
+		<div data-role="header" data-position="fixed" data-theme="b">
+			<a href="#paperList" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+			<h1>New Paper</h1>
+		</div>
+		<div data-role="content">
+			<input name="newPaper" id="newPaperInput" value="">
+			<a href="#" onclick="commitNewPaper()" class="ui-btn ui-btn-icon-left ui-icon-check">Create</a>
+
+		</div>
+	</div>
+	<div data-role="page" data-dialog="true" id="editQty">
+		<div data-role="header" data-position="fixed" data-theme="b">
+			<a href="#singlePaper" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+			<h1>Edit Qty</h1>
+		</div>
+		<div data-role="content">
+			<input name="newQty" id="newQty" type="number" value="">
+			<a href="#" onclick="commitQtyEdit()" class="ui-btn ui-btn-icon-left ui-icon-check">Save</a>
+
+		</div>
+	</div>
+	<div data-role="page" id="singlePaper">
+		<div data-role="header" data-position="fixed" data-theme="b">
+			<a href="#paperList" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+			<h1 id="singlePaperHeader">Paper Details</h1>
+		</div>
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<div data-role="controlgroup" style="margin: 3px 3px;">
+					<a href="#" onclick="incrementPaperSales('ff')" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-bottom"><div>Fighting Fund</div><div class="sp_moneyamount" id="spff"></div></a>
+					<a href="#" onclick="editPaperSales('ff')" class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-left">Edit</a>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div data-role="controlgroup" style="margin: 3px 3px 0px 3px;">
+					<a href="#" onclick="incrementPaperSales('subs')" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-bottom"><div>Cash Subs</div><div class="sp_moneyamount" id="spsubs"></div></a>
+					<a href="#" onclick="editPaperSales('subs')" class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-left">Edit</a>
+				</div>
+			</div>
+		</div>
+		<div data-role="controlgroup" style="margin: 3px 3px 0px 3px;">
+			<a href="#" onclick="incrementPaperSales('sales')" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-bottom"><div>Paper Sales</div><div class="sp_moneyamount" id="spsales"></div></a>
+			<a href="#" onclick="editPaperSales('sales')" class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-left">Edit</a>
+		</div>
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#paperList" data-icon="bars">Papers</a></li>
+					<li><a href="#otherSales" data-icon="grid">Others</a></li>
+					<li><a href="#settings" data-icon="gear">Settings</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" id="otherSales">
+		<div data-role="header" data-position="fixed" data-theme="b">
+			<h1>Other Sales</h1>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" data-inset="true" data-icon="edit" style="margin-top: 0px;" id="othersArray">
+			</ul>
+		</div>
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#paperList" data-icon="bars">Papers</a></li>
+					<li><a href="#otherSales" data-icon="grid">Others</a></li>
+					<li><a href="#settings" data-icon="gear">Settings</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" data-dialog="true" id="newOther">
+		<div data-role="header" data-position="fixed" data-theme="b">
+			<a href="#otherSales" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+			<h1>New Item</h1>
+		</div>
+		<div data-role="content">
+			<input id="newOtherInput" name="itemName" id="itemName" value="">
+			<a href="#" onclick="commitNewOther()" class="ui-btn ui-btn-icon-left ui-icon-check">Create</a>
+
+		</div>
+	</div>
+	<div data-role="page" data-dialog="true" id="editOtherQty">
+		<div data-role="header" data-position="fixed" data-theme="b">
+			<a href="#otherSales" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+			<h1>Edit Qty</h1>
+		</div>
+		<div data-role="content">
+			<input name="newOtherQty" id="newOtherQty" type="number" value="">
+			<a href="#" onclick="commitOtherQtyEdit()" class="ui-btn ui-btn-icon-left ui-icon-check">Save</a>
+
+		</div>
+	</div>
+	<div data-role="page" id="settings">
+		<div data-role="header" data-position="fixed" data-theme="b">
+			<h1>Settings</h1>
+		</div>
+		<div data-role="content">
+			<div class="ui-field-contain">
+				<label for="CurrencySymbol">Currency Symbol</label>
+				<input id="CurrencySymbol" value="" data-controls="currency">
+			</div>
+			<div class="ui-field-contain">
+				<label for="IncrementSales">Paper Sales Increment</label>
+				<input id="IncrementSales" value="" data-controls="salesincrement">
+			</div>
+			<div class="ui-field-contain">
+				<label for="IncrementFF">Fighting Fund Increment</label>
+				<input id="IncrementFF" value="" data-controls="ffincrement">
+			</div>
+			<div class="ui-field-contain">
+				<label for="IncrementSubs">Cash Subs Increment</label>
+				<input id="IncrementSubs" value="" data-controls="subsincrement">
+			</div>
+			<input id="clearAllData" onclick="clearData()" value="Reset Sales" data-icon="delete" type="button">
+		</div>
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#paperList" data-icon="bars">Papers</a></li>
+					<li><a href="#otherSales" data-icon="grid">Others</a></li>
+					<li><a href="#settings" data-icon="gear">Settings</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
